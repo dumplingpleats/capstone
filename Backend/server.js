@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env.local' });
+require('dotenv').config({ path: '.env' });
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -11,6 +11,7 @@ const quizAttemptRoutes = require('./routes/quizAttemptRoute');
 const helmet = require('helmet');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+var path = require("path");
 
 // express app
 const app = express();
@@ -23,6 +24,8 @@ app.use(express.json())
 app.use(helmet()); // Security headers
 app.use(cors());   // Enable cross-origin resource sharing
 app.use(express.json()); // Parses incoming requests with JSON payloads
+
+app.use(express.static(path.join(__dirname, "public")));
 
 // Logs incoming requests
 app.use((req, res, next) => {
@@ -103,4 +106,8 @@ app.post('/api/send-email', async (req, res) => {
         console.error("Error sending emails:", error);
         res.status(500).send('Error sending emails');
     }
+});
+
+app.all("*", function(req, res) {
+  res.sendFile(path.join(__dirname, '/public/', 'index.html'));
 });
