@@ -34,4 +34,7 @@ questionSchema.pre('save', function (next) {
 });
 
 // Check if the model is already compiled to prevent OverwriteModelError
-module.exports = mongoose.models.Question || mongoose.model('Question', questionSchema);
+// module.exports = mongoose.models.Question || mongoose.model('Question', questionSchema);
+
+const Question = mongoose.model('Question', questionSchema);
+module.exports = Question;
