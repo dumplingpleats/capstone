@@ -1,5 +1,5 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const Question = require('../models/Question'); // Ensure correct path to the Question model
+const Question = require('../models/_Question'); // Ensure correct path to the Question model
 
 const generateQuestionFromFlashcard = async (flashcard, quizId) => {
     const prompt = `
