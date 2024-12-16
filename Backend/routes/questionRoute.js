@@ -4,7 +4,7 @@ const router = express.Router();
 const { 
     getQuestionsByQuizId 
 
-} = require('../Controllers/questionController');
+} = require('../controllers/questionController');
 
 // Route to GET questions for a specific quiz
 router.get('/quiz/:quizId/questions', getQuestionsByQuizId);

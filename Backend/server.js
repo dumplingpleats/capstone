@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env' });
+require('dotenv').config({ path: '.env.local' });
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,10 +8,11 @@ const deckRoutes = require('./routes/deckRoute')
 const quizRoute = require('./routes/quizRoute');
 const questionRoutes = require('./routes/questionRoute');
 const quizAttemptRoutes = require('./routes/quizAttemptRoute');
+const leaderboardRoutes = require('./routes/leaderboardRoute')
+const shuffleAttemptRoutes = require('./routes/shuffleAttemptRoute')
 const helmet = require('helmet');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-var path = require("path");
 
 // express app
 const app = express();
@@ -24,8 +25,6 @@ app.use(express.json())
 app.use(helmet()); // Security headers
 app.use(cors());   // Enable cross-origin resource sharing
 app.use(express.json()); // Parses incoming requests with JSON payloads
-
-app.use(express.static(path.join(__dirname, "public")));
 
 // Logs incoming requests
 app.use((req, res, next) => {
@@ -40,6 +39,9 @@ app.use('/api/decks', deckRoutes)
 app.use('/api/quizzes', quizRoute);
 app.use('/api/questions', questionRoutes);
 app.use('/api/attempts', quizAttemptRoutes);
+app.use('/api/leaderboard', leaderboardRoutes)
+app.use('/api/shuffle', shuffleAttemptRoutes)
+
 
 // Ensure essential environment variables are set
 if (!process.env.MONGO_URI || !process.env.PORT) {
@@ -106,8 +108,4 @@ app.post('/api/send-email', async (req, res) => {
         console.error("Error sending emails:", error);
         res.status(500).send('Error sending emails');
     }
-});
-
-app.all("*", function(req, res) {
-  res.sendFile(path.join(__dirname, '/public/', 'index.html'));
 });
