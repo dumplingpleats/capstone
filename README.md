@@ -1,4 +1,4 @@
-# General Information
+# General Information:
 
 ## CardMates: An AI-Powered Flashcard and Quizzing Web App
 
